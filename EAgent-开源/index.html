@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAgent-文心 · 0 tokens、0 门槛、轻量级</title>
+<style>
+  :root{
+    --bg:#000; --text:#f5f5f7; --muted:#86868b; --accent:#3b82f6;
+    --grad:linear-gradient(135deg,#3b82f6,#7a5cff);
+    --card:rgba(255,255,255,.05); --border:rgba(255,255,255,.1); --code:#0d1117;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);line-height:1.7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .glow{position:fixed;width:620px;height:620px;border-radius:50%;pointer-events:none;z-index:-1;filter:blur(70px)}
+  .glow-1{top:-12%;left:-12%;background:radial-gradient(circle,rgba(59,130,246,.18) 0,rgba(0,0,0,0) 70%)}
+  .glow-2{bottom:8%;right:-12%;background:radial-gradient(circle,rgba(122,92,255,.18) 0,rgba(0,0,0,0) 70%)}
+  .container{max-width:1000px;margin:0 auto;padding:0 24px}
+  nav{position:fixed;top:0;left:0;width:100%;padding:16px 24px;z-index:100;
+    background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);
+    display:flex;justify-content:center}
+  nav b{font-size:18px;letter-spacing:2px;font-weight:700}
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:120px 24px 60px}
+  .hero h1{font-size:clamp(52px,11vw,132px);font-weight:800;letter-spacing:-.04em;line-height:1.15;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:fadeUp .9s ease-out}
+  .hero p{font-size:clamp(18px,2.6vw,26px);color:var(--muted);max-width:820px;margin-top:20px;
+    animation:fadeUp .9s ease-out .15s both}
+  .hero .badges{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;animation:fadeUp .9s ease-out .3s both}
+  .badge{font-size:13px;padding:6px 12px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  section{padding:90px 0}
+  .kicker{font-size:13px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:10px}
+  h2{font-size:clamp(26px,4vw,40px);margin-bottom:22px;letter-spacing:-.02em}
+  h3{font-size:18px;margin:18px 0 8px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin-bottom:16px}
+  .card.warn{border-color:rgba(255,69,58,.35)}
+  ul{padding-left:20px}
+  li{margin:8px 0}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .ic{background:rgba(255,255,255,.08);border-radius:6px;padding:2px 6px;font-size:.92em}
+  pre{background:var(--code);border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+    overflow:auto;font-size:13.5px;color:#c9d1d9}
+  .hl{color:#fff;font-weight:600}
+  .muted{color:var(--muted)}
+  .red{color:#ff6961}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+  th{color:var(--muted);font-weight:500}
+  footer{border-top:1px solid var(--border);padding:36px 0;color:var(--muted);font-size:14px;text-align:center}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.active{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<nav><b>EAgent · 文心版</b></nav>
+
+<header class="hero">
+  <h1>EAgent-文心</h1>
+  <p>0 tokens、0 门槛、轻量级<br>基于百度文心网页版制作的 Agent —— 让文心“操控”你的电脑。</p>
+  <div class="badges">
+    <span class="badge">GPL-3.0</span>
+    <span class="badge">单文件 EXE</span>
+    <span class="badge">CDP 自动化</span>
+    <span class="badge">免 API-Key</span>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="reveal">
+  <div class="kicker">Requirements</div>
+  <h2>环境要求</h2>
+  <div class="card">
+    <ul>
+      <li><span class="hl">必须</span>：Edge 浏览器（Windows 自带）</li>
+      <li><span class="hl">系统</span>：Windows 10 / 11，预留 20 MB 空间</li>
+      <li><span class="hl">权限</span>：需以<span class="hl">管理员身份</span>运行（它要启动浏览器调试端口并执行 PowerShell）</li>
+    </ul>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="kicker">Origin</div>
+  <h2>起源</h2>
+  <div class="card">
+    <h3>先说网上的项目</h3>
+    <ul>
+      <li><span class="hl">正经的 Agent</span>（如各大厂商的 Agent Harness）—— 功能强大，但都要 API-Key、要花钱买 token。</li>
+      <li><span class="hl">网页反代类</span> —— 通过反代白嫖 token，功能也不弱，但封号概率大。</li>
+      <li>本项目核心是 <span class="hl">CDP 自动化操控</span>网页，封号概率更小（但不是 0，详见下方声明）。</li>
+    </ul>
+    <h3>再看这个项目</h3>
+    <ul>
+      <li>免费的文心网页版足够日常用，小项目没必要买 token（而且它有时会“吃白饭”，思考陷入死循环白烧钱）。</li>
+      <li>但文心网页版无法直接编辑电脑文件：最多生成代码，还得复制粘贴，不能真正“操控”电脑。</li>
+      <li>于是思路很简单：<span class="hl">直接生成 PowerShell 代码 → 执行 → 把结果扔回去</span>。</li>
+      <li>本项目由此而来：让百度文心网页版编辑电脑文件、看电脑屏幕、控制键鼠、编辑 Excel / Word……还会更多。</li>
+    </ul>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="kicker">Quick Start</div>
+  <h2>快速使用</h2>
+  <div class="card">
+    <ul>
+      <li>下载：<a href="./dist/EAgent-文心.exe">EAgent-文心.exe</a>（本仓库 <span class="ic">dist/</span> 目录）</li>
+      <li>右键 → <span class="hl">以管理员身份运行</span>（不要直接双击）</li>
+      <li>点击 <span class="ic">选择工作目录</span>，选择一个目录</li>
+      <li>程序会自动打开 Edge 并进入文心页面；<span class="hl">文心免登录即可基础对话</span>，如需完整功能请登录百度账号</li>
+      <li>点击 <span class="ic">开始新对话</span>，等待 AI 分析提示词</li>
+      <li>用 EAgent 发消息，<span class="hl">而不是在网页里发</span> —— 网页只负责展示</li>
+    </ul>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="kicker">Under the Hood</div>
+  <h2>实现原理 —— 自动化脚本</h2>
+  <div class="card">
+    <ul>
+      <li>EAgent <span class="hl">不是反代</span>、没有第三方中转、不逆向文心接口。</li>
+      <li>核心原理：通过 CDP 自动化模拟真实用户操作。和反代一样，这类操作<span class="hl">可能违反
+        <a href="https://yiyanapp.baidu.com/app/userprivacy" target="_blank" rel="noopener">《文心用户协议》</a></span>，
+        请自行评估风险。</li>
+    </ul>
+  </div>
+  <pre><code>用 PowerShell 连接 Chrome/Edge 调试端口，
+通过 CDP WebSocket 在文心页面里执行 JavaScript，
+模拟输入、上传文件、点击发送，并轮询判断助手回复是否完成、返回助手回复信息。</code></pre>
+</section>
+
+<section class="reveal">
+  <div class="kicker">Disclaimer</div>
+  <h2>声明</h2>
+  <div class="card">
+    <ul>
+      <li><span class="hl">轻量级</span>：整个程序只有一个 .exe，仅供学习交流，不适用于生产环境。</li>
+      <li><span class="hl">无安全沙箱</span>：文心可能生成恶意代码，再通过 EAgent 在你的电脑上执行。请务必审查 AI 要执行的命令。</li>
+      <li><span class="hl">风控</span>：有基础防风控措施，但<span class="hl">极端高频</span>使用仍可能被文心限制；作者不承担责任。</li>
+    </ul>
+  </div>
+
+  <div class="card warn">
+    <h3 class="red">病毒误报</h3>
+    <p>本项目上游由 <span class="ic">易语言</span> 编写，其编译器常导致杀毒软件误报。上游作者保证原版不含恶意代码。</p>
+    <p class="muted">本 fork 由原版 EXE 经<span class="hl">等长字节修改</span>产生（不改变文件结构），改动清单见
+      <a href="./docs/MODIFICATIONS.md">docs/MODIFICATIONS.md</a>。可自行比对哈希校验。</p>
+  </div>
+
+  <div class="card">
+    <h3>关于本项目</h3>
+    <table>
+      <tr><th>项目性质</th><td><a href="https://github.com/YaoGaoChaoLe/EAgent" target="_blank" rel="noopener">EAgent</a> 的衍生版本（文心 fork）</td></tr>
+      <tr><th>上游作者</th><td>YaoGaoChaoLe，遵循 GPL-3.0</td></tr>
+      <tr><th>本 fork 修改</th><td>默认后端改为百度文心、界面文字、独立浏览器存档、DOM 选择器、回答读取过滤、图标</td></tr>
+      <tr><th>许可证</th><td>GPL-3.0（见 <a href="./LICENSE">LICENSE</a>）</td></tr>
+      <tr><th>构建与复现</th><td><a href="./BUILD.md">BUILD.md</a> · <a href="./docs/MODIFICATIONS.md">MODIFICATIONS.md</a></td></tr>
+    </table>
+    <p class="muted" style="margin-top:12px">免责：本项目与百度、DeepSeek 均无关联，仅供学习研究，请遵守目标网站服务条款。</p>
+  </div>
+
+  <div class="card">
+    <p>上游还有一些小玩意：<a href="./Works/liang-skin/">liang-skin</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">EAgent-文心 · 让百度文心网页版“操控”你的电脑 · GPL-3.0</div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
